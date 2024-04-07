@@ -50,8 +50,12 @@ jobs:
     - name: Build Sioyek
       working-directory: ${{env.GITHUB_WORKSPACE}}
       run: .\build_windows.bat portable
-    - name: upload windows artifact
-      uses: actions/upload-artifact@v1
+    - name: upload windows-portable
+      uses: actions/upload-release-asset@v1.0.1
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       with:
-        name: uploads
-        path: sioyek-release-windows-portable.zip
+        upload_url: ${{ needs.create_release.outputs.upload_url }}
+        asset_path: ./sioyek-release-windows-portable.zip
+        asset_name: sioyek-release-windows-portable.zip
+        asset_content_type: application/zip
